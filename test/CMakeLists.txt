@@ -1,7 +1,7 @@
 find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
 
-add_executable(twine-unit-tests src/some-test.cpp)
+add_executable(twine-unit-tests src/twine.cpp)
 target_link_libraries(twine-unit-tests
 PRIVATE
     cool::twine
