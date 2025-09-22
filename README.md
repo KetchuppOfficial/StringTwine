@@ -36,10 +36,10 @@ cmake --build build -j2
 
 ## List of cmake options defined by the project
 
-| Option          | Values         | Explanation                           | Default |
-|-----------------|----------------|---------------------------------------|---------|
-| BUILD_TESTS     | **ON**/**OFF** | Set to **ON** to build unit tests     | **OFF** |
-| BUILD_BENCHMARK | **ON**/**OFF** | Set to **ON** to build the benchmark  | **OFF** |
+| Option               | Values         | Explanation                           | Default |
+|----------------------|----------------|---------------------------------------|---------|
+| COOL_BUILD_TESTS     | **ON**/**OFF** | Set to **ON** to build unit tests     | **OFF** |
+| COOL_BUILD_BENCHMARK | **ON**/**OFF** | Set to **ON** to build the benchmark  | **OFF** |
 
 ## Benchmark
 

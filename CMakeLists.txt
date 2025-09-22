@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(twine LANGUAGES CXX)
 
-option(BUILD_TESTS "build tests")
-option(BUILD_BENCHMARK "build benchmark")
+option(COOL_BUILD_TESTS "build tests")
+option(COOL_BUILD_BENCHMARK "build benchmark")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -20,11 +20,11 @@ INTERFACE
     $<$<CXX_COMPILER_ID:GNU,Clang>: -Wall -Wextra -pedantic>
 )
 
-if (BUILD_TESTS)
+if (COOL_BUILD_TESTS)
     enable_testing()
     add_subdirectory(test)
 endif()
 
-if (BUILD_BENCHMARK)
+if (COOL_BUILD_BENCHMARK)
     add_subdirectory(benchmark)
 endif()
