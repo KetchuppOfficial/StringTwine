@@ -18,22 +18,22 @@ class BasicTwine final {
   public:
     BasicTwine() = default;
 
-    explicit BasicTwine(string_view str) noexcept : left_{get_child(str)} {}
+    constexpr explicit BasicTwine(string_view str) noexcept : left_{get_child(str)} {}
 
-    BasicTwine(const BasicTwine &) = delete;
-    BasicTwine &operator=(const BasicTwine &) = delete;
+    constexpr BasicTwine(const BasicTwine &) = delete;
+    constexpr BasicTwine &operator=(const BasicTwine &) = delete;
 
-    BasicTwine(BasicTwine &&) = default;
-    BasicTwine &operator=(BasicTwine &&) = default;
+    constexpr BasicTwine(BasicTwine &&) = default;
+    constexpr BasicTwine &operator=(BasicTwine &&) = default;
 
     ~BasicTwine() = default;
 
-    bool empty() const noexcept {
+    constexpr bool empty() const noexcept {
         return std::holds_alternative<std::monostate>(left_) &&
                std::holds_alternative<std::monostate>(right_);
     }
 
-    string str() const {
+    constexpr string str() const {
         if (std::holds_alternative<std::monostate>(left_)) {
             if (std::holds_alternative<std::monostate>(right_)) {
                 return {};
@@ -51,29 +51,29 @@ class BasicTwine final {
         return str;
     }
 
-    friend BasicTwine operator+(BasicTwine &&lhs, BasicTwine &&rhs) noexcept {
+    constexpr friend BasicTwine operator+(BasicTwine &&lhs, BasicTwine &&rhs) noexcept {
         return BasicTwine{std::move(lhs), std::move(rhs)};
     }
 
-    friend BasicTwine operator+(BasicTwine &&lhs, string_view rhs) noexcept {
+    constexpr friend BasicTwine operator+(BasicTwine &&lhs, string_view rhs) noexcept {
         return BasicTwine{std::move(lhs), rhs};
     }
 
-    friend BasicTwine operator+(string_view lhs, BasicTwine &&rhs) noexcept {
+    constexpr friend BasicTwine operator+(string_view lhs, BasicTwine &&rhs) noexcept {
         return BasicTwine{lhs, std::move(rhs)};
     }
 
   private:
-    BasicTwine(BasicTwine &&lhs, string_view rhs) noexcept
+    constexpr BasicTwine(BasicTwine &&lhs, string_view rhs) noexcept
         : left_{get_child(std::move(lhs))}, right_{get_child(rhs)} {}
 
-    BasicTwine(string_view lhs, BasicTwine &&rhs) noexcept
+    constexpr BasicTwine(string_view lhs, BasicTwine &&rhs) noexcept
         : left_{get_child(lhs)}, right_{get_child(std::move(rhs))} {}
 
-    BasicTwine(BasicTwine &&lhs, BasicTwine &&rhs) noexcept
+    constexpr BasicTwine(BasicTwine &&lhs, BasicTwine &&rhs) noexcept
         : left_{get_child(std::move(lhs))}, right_{get_child(std::move(rhs))} {}
 
-    static child_type get_child(BasicTwine &&twine) noexcept {
+    constexpr static child_type get_child(BasicTwine &&twine) noexcept {
         if (std::holds_alternative<std::monostate>(twine.left_)) {
             if (std::holds_alternative<std::monostate>(twine.right_)) {
                 return {std::monostate{}};
@@ -87,21 +87,21 @@ class BasicTwine final {
         }
     }
 
-    static child_type get_child(string_view sv) noexcept {
+    constexpr static child_type get_child(string_view sv) noexcept {
         if (sv.empty()) {
             return {std::monostate{}};
         }
         return {sv};
     }
 
-    void to_string(string &str) const {
+    constexpr void to_string(string &str) const {
         class Visitor final {
           public:
-            explicit Visitor(string &str) noexcept : buffer(str) {}
+            constexpr explicit Visitor(string &str) noexcept : buffer(str) {}
 
-            void operator()([[maybe_unused]] std::monostate) noexcept { /* no-op */ }
-            void operator()(string_view str) { buffer.append(str); }
-            void operator()(const BasicTwine *twine) { twine->to_string(buffer); }
+            constexpr void operator()([[maybe_unused]] std::monostate) noexcept { /* no-op */ }
+            constexpr void operator()(string_view str) { buffer.append(str); }
+            constexpr void operator()(const BasicTwine *twine) { twine->to_string(buffer); }
 
           private:
             string &buffer;

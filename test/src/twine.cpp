@@ -328,3 +328,20 @@ TEST(TwineAddition, LongConcatenation) {
     // Assert
     EXPECT_EQ(concatenation, result);
 }
+
+TEST(TwineConstexpr, Concatenation) {
+    static_assert((cool::Twine{} + ""sv).str().empty());
+    static_assert((cool::Twine{"lorem ipsum"} + ""sv).str() == "lorem ipsum");
+    static_assert((cool::Twine{"lorem "} + "ipsum"sv).str() == "lorem ipsum");
+    static_assert((cool::Twine{} + "lorem ipsum"sv).str() == "lorem ipsum");
+
+    static_assert((""sv + cool::Twine{}).str().empty());
+    static_assert((""sv + cool::Twine{"lorem ipsum"}).str() == "lorem ipsum");
+    static_assert(("lorem "sv + cool::Twine{"ipsum"}).str() == "lorem ipsum");
+    static_assert(("lorem ipsum"sv + cool::Twine{}).str() == "lorem ipsum");
+
+    static_assert((cool::Twine{} + cool::Twine{}).str().empty());
+    static_assert((cool::Twine{} + cool::Twine{"lorem ipsum"}).str() == "lorem ipsum");
+    static_assert((cool::Twine{"lorem "} + cool::Twine{"ipsum"}).str() == "lorem ipsum");
+    static_assert((cool::Twine{"lorem ipsum"} + cool::Twine{}).str() == "lorem ipsum");
+}
