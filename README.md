@@ -31,7 +31,7 @@ nix develop --extra-experimental-features nix-command --extra-experimental-featu
 
 ```bash
 cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake --build build -j2
 ```
 
 ## List of cmake options defined by the project
